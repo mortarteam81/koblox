@@ -1,8 +1,13 @@
 import React, { useEffect } from 'react';
 import { Layout, Row, Col, Card, Statistic } from 'antd';
-import { UserOutlined, TeamOutlined, ProjectOutlined, FileOutlined } from 'antd/es/icons';
-import { useAuthStore } from '@stores/useAuthStore';
-import Button from '@components/common/Button';
+import {
+  UserOutlined,
+  TeamOutlined,
+  ProjectOutlined,
+  FileOutlined,
+} from '@ant-design/icons';
+import { useAuthStore } from '../stores/useAuthStore';
+import Button from '../components/common/Button';
 
 const { Header, Content, Footer } = Layout;
 

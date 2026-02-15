@@ -1,6 +1,10 @@
 import React from 'react';
 import { Button as AntButton } from 'antd';
-import { ButtonProps } from '@types/index';
+import type { ButtonProps as ButtonPropsType } from '@types';
+
+interface ButtonProps extends ButtonPropsType {
+  style?: React.CSSProperties;
+}
 
 export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
@@ -8,6 +12,7 @@ export const Button: React.FC<ButtonProps> = ({
   disabled = false,
   loading = false,
   onClick,
+  style,
   children,
 }) => {
   const getType = (): 'primary' | 'default' | 'dashed' | 'text' | 'link' => {
@@ -46,6 +51,7 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       loading={loading}
       onClick={onClick}
+      style={style}
     >
       {children}
     </AntButton>

@@ -8,6 +8,9 @@
     "my-react-app",
     "my-react-app/my-express-api"
   ],
+  "engines": {
+    "npm": ">=8.0.0"
+  },
   "scripts": {
     "dev": "npm run dev --workspaces",
     "build": "npm run build --workspaces",
