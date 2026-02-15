@@ -1,0 +1,27 @@
+{
+  "extends": [
+    "react-app",
+    "react-app/jest"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "no-console": [
+      "warn",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
+    "no-unused-vars": "off",
+    "no-var": "error",
+    "prefer-const": "error"
+  }
+}
