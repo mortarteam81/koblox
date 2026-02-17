@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import Phaser from 'phaser';
 
 interface PhaserGameProps {
   config: Phaser.Types.Core.GameConfig;
@@ -18,12 +19,12 @@ const PhaserGame: React.FC<PhaserGameProps> = ({ config, onGameReady, style }) =
       parent: containerRef.current,
     };
 
-    import('phaser').then((Phaser) => {
-      gameRef.current = new Phaser.Game(gameConfig);
-      if (onGameReady && gameRef.current) {
-        onGameReady(gameRef.current);
-      }
-    });
+    // 정적 import 사용 - 씬 파일과 동일한 Phaser 인스턴스를 공유하여
+    // 'plugin.boot is not a function' 이중 인스턴스 충돌 방지
+    gameRef.current = new Phaser.Game(gameConfig);
+    if (onGameReady && gameRef.current) {
+      onGameReady(gameRef.current);
+    }
 
     return () => {
       gameRef.current?.destroy(true);
