@@ -12,8 +12,8 @@ const SPEED_INCREMENT = 20;
 const OBSTACLE_MIN_INTERVAL = 900;
 
 export class JumpRunnerScene extends Phaser.Scene {
-  private player!: Phaser.GameObjects.Rectangle;      // 충돌 히트박스 (invisible)
-  private playerVisual!: Phaser.GameObjects.Container; // 보네카 암발라부 비주얼
+  private player!: Phaser.GameObjects.Rectangle;   // 충돌 히트박스 (invisible)
+  private playerVisual!: Phaser.GameObjects.Image; // 보네카 암발라부 이미지
   private ground!: Phaser.GameObjects.Rectangle;
   private obstacles!: Phaser.GameObjects.Group;
   private scoreText!: Phaser.GameObjects.Text;
@@ -32,7 +32,9 @@ export class JumpRunnerScene extends Phaser.Scene {
     super({ key: 'JumpRunnerScene' });
   }
 
-  preload() {}
+  preload() {
+    this.load.image('player', '/player.png');
+  }
 
   create() {
     this.onGameEnd = this.registry.get('onGameEnd');
@@ -70,8 +72,9 @@ export class JumpRunnerScene extends Phaser.Scene {
     this.player.setAlpha(0);
     this.player.setDepth(2);
 
-    // 보네카 암발라부 캐릭터 빌드
-    this.playerVisual = this.buildAmbalabulChar();
+    // 보네카 암발라부 이미지
+    this.playerVisual = this.add.image(PLAYER_X, GROUND_Y - PLAYER_SIZE / 2, 'player');
+    this.playerVisual.setDisplaySize(48, 48);
     this.playerVisual.setDepth(3);
 
     // 캐릭터 상하 흔들림 애니메이션
@@ -102,51 +105,6 @@ export class JumpRunnerScene extends Phaser.Scene {
     this.input.keyboard!.on('keydown-SPACE', this.jump, this);
     this.input.keyboard!.on('keydown-UP', this.jump, this);
     this.input.on('pointerdown', this.jump, this);
-  }
-
-  private buildAmbalabulChar(): Phaser.GameObjects.Container {
-    // 몸통 (둥근 보라색)
-    const body = this.add.circle(0, 2, 14, 0x9b30ff);
-
-    // 얼굴 하이라이트
-    const highlight = this.add.circle(-4, -4, 5, 0xc87dff, 0.5);
-
-    // 흰자위
-    const leftWhite = this.add.circle(-5, -2, 5, 0xffffff);
-    const rightWhite = this.add.circle(5, -2, 5, 0xffffff);
-
-    // 동공 (카오스 눈 - 방향 제각각)
-    const leftPupil = this.add.circle(-4, -1, 3, 0x1a0033);
-    const rightPupil = this.add.circle(7, -3, 3, 0x1a0033);
-
-    // 눈 하이라이트
-    const leftGlint = this.add.circle(-3, -2, 1, 0xffffff);
-    const rightGlint = this.add.circle(8, -4, 1, 0xffffff);
-
-    // 입 (삐뚤어진 브레인롯 스마일)
-    const mouth = this.add.arc(1, 5, 7, 10, 170, false, 0x33001a);
-
-    // 작은 팔들 (선)
-    const leftArm = this.add.rectangle(-16, 4, 8, 3, 0x9b30ff, 0.9);
-    leftArm.setAngle(-30);
-    const rightArm = this.add.rectangle(16, 4, 8, 3, 0x9b30ff, 0.9);
-    rightArm.setAngle(30);
-
-    // 이름표
-    const label = this.add.text(0, 21, '암발라부', {
-      fontSize: '7px',
-      color: '#ffe0ff',
-      fontFamily: 'Arial',
-      fontStyle: 'bold',
-    }).setOrigin(0.5);
-
-    const container = this.add.container(
-      this.player.x,
-      this.player.y,
-      [body, highlight, leftWhite, rightWhite, leftPupil, rightPupil, leftGlint, rightGlint, mouth, leftArm, rightArm, label]
-    );
-
-    return container;
   }
 
   private jump() {
@@ -257,10 +215,10 @@ export class JumpRunnerScene extends Phaser.Scene {
 
     // 보네카 암발라부 충격 이펙트
     this.tweens.killTweensOf(this.playerVisual);
+    this.playerVisual.setTint(0xff4444);
     this.playerVisual.setScale(1.4);
     this.time.delayedCall(80, () => this.playerVisual.setScale(0.7));
     this.time.delayedCall(160, () => this.playerVisual.setScale(1.2));
-    (this.playerVisual.getAt(0) as Phaser.GameObjects.Arc).setFillStyle(0xff2222);
 
     this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_WIDTH, GAME_HEIGHT, 0x000000, 0.65)
       .setDepth(20);
