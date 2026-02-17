@@ -25,20 +25,20 @@ export class StarCollectorScene extends Phaser.Scene {
   private gameOver = false;
   private obstacleTimer!: Phaser.Time.TimerEvent;
   private countdownTimer!: Phaser.Time.TimerEvent;
-  private onGameEnd: (score: number) => void;
+  private onGameEnd!: (score: number) => void;
 
   // Touch drag support
   private dragStart: { x: number; y: number } | null = null;
   private touchVelocity = { x: 0, y: 0 };
 
-  constructor(onGameEnd: (score: number) => void) {
+  constructor() {
     super({ key: 'StarCollectorScene' });
-    this.onGameEnd = onGameEnd;
   }
 
   preload() {}
 
   create() {
+    this.onGameEnd = this.registry.get('onGameEnd');
     this.score = 0;
     this.timeLeft = GAME_DURATION;
     this.gameOver = false;

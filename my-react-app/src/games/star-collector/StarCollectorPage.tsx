@@ -30,8 +30,13 @@ const StarCollectorPage: React.FC = () => {
       width: GAME_WIDTH,
       height: GAME_HEIGHT,
       backgroundColor: '#0a0a2a',
-      scene: [new StarCollectorScene(handleGameEnd)],
+      scene: StarCollectorScene,
       physics: { default: 'arcade', arcade: { gravity: { x: 0, y: 0 }, debug: false } },
+      callbacks: {
+        preBoot: (game: Phaser.Game) => {
+          game.registry.set('onGameEnd', handleGameEnd);
+        },
+      },
     };
   }, [handleGameEnd]);
 

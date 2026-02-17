@@ -30,7 +30,12 @@ const JumpRunnerPage: React.FC = () => {
       width: GAME_WIDTH,
       height: GAME_HEIGHT,
       backgroundColor: '#87ceeb',
-      scene: [new JumpRunnerScene(handleGameEnd)],
+      scene: JumpRunnerScene,
+      callbacks: {
+        preBoot: (game: Phaser.Game) => {
+          game.registry.set('onGameEnd', handleGameEnd);
+        },
+      },
     };
   }, [handleGameEnd]);
 

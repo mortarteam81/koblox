@@ -24,17 +24,17 @@ export class JumpRunnerScene extends Phaser.Scene {
   private obstacleTimer = 0;
   private nextObstacleTime = 1500;
   private bgTiles: Phaser.GameObjects.Rectangle[] = [];
-  private onGameEnd: (score: number) => void;
+  private onGameEnd!: (score: number) => void;
   private scoreTimer = 0;
 
-  constructor(onGameEnd: (score: number) => void) {
+  constructor() {
     super({ key: 'JumpRunnerScene' });
-    this.onGameEnd = onGameEnd;
   }
 
   preload() {}
 
   create() {
+    this.onGameEnd = this.registry.get('onGameEnd');
     this.score = 0;
     this.gameOver = false;
     this.playerVY = 0;
