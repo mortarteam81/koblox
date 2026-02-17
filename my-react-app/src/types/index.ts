@@ -1,3 +1,19 @@
+// Game Types
+export type GameId = 'star' | 'memory' | 'jump';
+
+export interface LeaderboardEntry {
+  id: string;
+  nickname: string;
+  score: number;
+  game: GameId;
+  timestamp: string;
+}
+
+export interface GameState {
+  nickname: string;
+  sessionScores: Record<GameId, number>;
+}
+
 // Auth Types
 export interface User {
   id: string;
